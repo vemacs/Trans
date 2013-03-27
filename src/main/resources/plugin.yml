@@ -1,0 +1,22 @@
+author: vemacs
+database: false
+description: Real-time translation for Bukkit
+main: com.nullblock.vemacs.trans.Trans
+name: Trans
+url: http://github.com/vemacs/Trans
+version: '1.0'
+commands:
+   trans:
+      description: Reloads Trans
+      usage: /trans
+      permission: trans.reload
+      permission-message: You don't have permission to do this.
+
+permissions:
+    trans.*:
+      description: Gives you access to all Trans commands.
+      children: 
+        trans.reload: true
+    trans.reload:
+      description: Allows you to reload Trans
+      default: op
