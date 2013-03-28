@@ -35,7 +35,7 @@ public class TransUtil {
 		text = URLEncoder.encode(text);
 		String response = readURL("http://translate.google.com/translate_a/t?q=" + text + "&client=t&text=&sl=auto&tl=" + lang);
 		int end = response.indexOf(URLDecoder.decode(text));
-		if( !(end == 4) ) {
+		if( !(end < 4) ) {
 			response = response.substring(4, end);
 			response = response.substring(0, response.length() - 3);
 
