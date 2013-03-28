@@ -23,8 +23,16 @@ public class Trans extends JavaPlugin implements Listener {
     public void onPlayerChat(AsyncPlayerChatEvent event) {
     	String lang = this.getConfig().getString("lang");
     	Boolean uppercase = this.getConfig().getBoolean("uppercase");
+    	Boolean bigben = false;
         String message = event.getMessage();
+        
         message = TransUtil.getTranslation(message, lang);
+        message.replace("nhttp", "http");
+        message.replace("/ ", "/");
+        message.replace(" /", "/");
+        message.replace("- ", "-");
+        message.replace(" -", "-");
+        message.replace(" :", ":");
         if( uppercase == true ){
         message = message.toUpperCase(new Locale(lang));
         }
