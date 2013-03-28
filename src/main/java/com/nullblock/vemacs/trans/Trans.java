@@ -13,6 +13,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -26,12 +27,16 @@ public class Trans extends JavaPlugin implements Listener {
         this.saveDefaultConfig();
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerChat(AsyncPlayerChatEvent event) {
     	String lang = this.getConfig().getString("lang");
     	Boolean uppercase = this.getConfig().getBoolean("uppercase");
     	Boolean bigben = false;
         String message = event.getMessage();
+        if(message.startsWith("bigben: ")){
+        	bigben = true;
+        	message.replace("bigben: ", "");
+        }
         HashMap hm = new HashMap(); 
         Pattern p = Pattern
 				.compile("(?i)\\b((?:https?://|www\\d{0,3}[.]|[a-z0-9.\\-]+[.][a-z]{2,4}/)(?:[^\\s()<>]+|\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\))+(?:\\(([^\\s()<>]+|(\\([^\\s()<>]+\\)))*\\)|[^\\s`!()\\[\\]{};:'\".,<>?������]))");
@@ -58,6 +63,9 @@ public class Trans extends JavaPlugin implements Listener {
 
         if( uppercase == true ){
         message = message.toUpperCase(new Locale(lang));
+        }
+        if( bigben == true){
+        	message = "bigben: " + message;
         }
         event.setMessage(message);
     }
