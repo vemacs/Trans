@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.nullblock.vemacs.trans</groupId>
     <artifactId>Trans</artifactId>
-    <version>1.0</version>
+    <version>1.0.1</version>
     <name>Trans</name>
     <url>http://github.com/vemacs/Trans</url>
     <repositories>
