@@ -12,6 +12,7 @@ Configuration
 -------------
 
 `lang:` a [2-letter ISO 639-1 Code](http://www.loc.gov/standards/iso639-2/php/code_list.php)
+
 `uppercase:` whether or not to capitalize the translated message
 
 Commands

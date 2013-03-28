@@ -83,6 +83,9 @@ public class TransUtil {
 	public static String postProcess(String response, String lang){
 		// post processing text
 		response = response.replace(" :", ":");
+		response = response.replace(" ,", ",");
+		response = response.replace(". / ", "./");
+
 		if( response.startsWith("¿") && StringUtils.countMatches(response, "?") == 0){
 			response = response + "?";
 		}
