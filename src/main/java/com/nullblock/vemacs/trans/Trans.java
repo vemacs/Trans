@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+
 public class Trans extends JavaPlugin implements Listener {
 	public void onDisable() {
 	}
@@ -28,7 +29,7 @@ public class Trans extends JavaPlugin implements Listener {
 		String message = event.getMessage();
 		if(message.startsWith("bigben: ")){
 			bigben = true;
-			message.substring(8);
+			message = message.substring(8);
 		}
 		message = TransUtil.getTranslation(message, lang);
 		if( bigben == true){
@@ -37,6 +38,7 @@ public class Trans extends JavaPlugin implements Listener {
 		if( uppercase == true ){
 			message = message.toUpperCase(new Locale(lang));
 		}
+		message = TransUtil.postProcess(message, lang);
 		event.setMessage(message);
 	}
 

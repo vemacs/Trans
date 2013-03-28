@@ -77,12 +77,12 @@ public class TransUtil {
 			response.replace(me.getKey().toString(), me.getValue().toString()); 
 		} 
 		// end UUID to URL
-		response = postProcess(response, lang);
 		return response;
 	}
 
 	public static String postProcess(String response, String lang){
 		// post processing text
+		response = response.replace(" :", ":");
 		if( response.startsWith("¿") && StringUtils.countMatches(response, "?") == 0){
 			response = response + "?";
 		}
