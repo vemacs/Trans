@@ -31,11 +31,11 @@ public class Trans extends JavaPlugin implements Listener {
 			message.substring(8);
 		}
 		message = TransUtil.getTranslation(message, lang);
-		if( uppercase == true ){
-			message = message.toUpperCase(new Locale(lang));
-		}
 		if( bigben == true){
 			message = "bigben: " + message;
+		}
+		if( uppercase == true ){
+			message = message.toUpperCase(new Locale(lang));
 		}
 		event.setMessage(message);
 	}
