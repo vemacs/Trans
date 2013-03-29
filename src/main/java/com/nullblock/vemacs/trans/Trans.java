@@ -21,7 +21,7 @@ public class Trans extends JavaPlugin implements Listener {
 		this.saveDefaultConfig();
 	}
 
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.HIGH)
 	public void onPlayerChat(AsyncPlayerChatEvent event) {
 		String lang = this.getConfig().getString("lang");
 		Boolean uppercase = this.getConfig().getBoolean("uppercase");
