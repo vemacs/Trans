@@ -107,7 +107,7 @@ public class TransUtil {
 		for(int i = 0; i < sentences.size(); i++ ){
 			line = line + sentences.get(i);
 			String trans = getTrans(line);
-			finalresponse = finalresponse + trans + " ";
+			finalresponse = finalresponse + trans;
 			line = "";
 		}
 		return finalresponse;
