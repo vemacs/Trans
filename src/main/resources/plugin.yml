@@ -4,7 +4,7 @@ description: Real-time translation for Bukkit
 main: com.nullblock.vemacs.trans.Trans
 name: Trans
 url: http://github.com/vemacs/Trans
-version: '1.0.1'
+version: '1.0.2'
 commands:
    trans:
       description: Reloads Trans
