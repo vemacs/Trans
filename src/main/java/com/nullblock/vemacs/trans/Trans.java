@@ -21,7 +21,7 @@ public class Trans extends JavaPlugin implements Listener {
 		this.saveDefaultConfig();
 	}
 
-	@EventHandler(priority = EventPriority.HIGH)
+	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlayerChat(AsyncPlayerChatEvent event) {
 		String lang = this.getConfig().getString("lang");
 		Boolean uppercase = this.getConfig().getBoolean("uppercase");
@@ -38,7 +38,6 @@ public class Trans extends JavaPlugin implements Listener {
 		if( uppercase == true ){
 			message = message.toUpperCase(new Locale(lang));
 		}
-		message = TransUtil.postProcess(message, lang);
 		event.setMessage(message);
 	}
 

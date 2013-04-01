@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -15,6 +14,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class TransUtil {
 
@@ -24,13 +27,12 @@ public class TransUtil {
 			URL toread = new URL(url);
 			URLConnection yc = toread.openConnection();
 			// Yahoo uses this UserAgent, so might as well use it to prevent 403s
-			yc.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-GB;     rv:1.9.2.13) Gecko/20101203 Firefox/3.6.13 (.NET CLR 3.5.30729)");
+			yc.setRequestProperty("User-Agent", "Mozilla/5.0");
 			BufferedReader in = new BufferedReader(new InputStreamReader(yc
 					.getInputStream(), "UTF-8"));
 			String inputLine;
 			while ((inputLine = in.readLine()) != null) {
 				response = response + inputLine;
-
 			}
 			in.close();
 		} catch (Exception e) {
@@ -59,16 +61,8 @@ public class TransUtil {
 		text = sb.toString();
 		// end replace with UUID
 		text = URLEncoder.encode(text);
-		String response = readURL("http://translate.google.com/translate_a/t?q=" + text + "&client=t&text=&sl=auto&tl=" + lang);
-		int end = response.indexOf(URLDecoder.decode(text));
-		if( (end > 4) ) {
-			// prevents substring errors
-			response = response.substring(4, end);
-			response = response.substring(0, response.length() - 3);
+		String response = readURL("http://translate.google.com/translate_a/t?q=" + text + "&client=p&text=&sl=auto&tl=" + lang + "&ie=UTF-8&oe=UTF-8");
 
-		} else {
-			response = URLDecoder.decode(text);
-		}
 		// begin UUID to URL		
 		Set set = hm.entrySet(); 
 		Iterator i = set.iterator(); 
@@ -77,6 +71,8 @@ public class TransUtil {
 			response.replace(me.getKey().toString(), me.getValue().toString()); 
 		} 
 		// end UUID to URL
+		response = parse(response);
+		response = postProcess(response, lang);
 		return response;
 	}
 
@@ -96,5 +92,20 @@ public class TransUtil {
 			response = "You" + response;
 		}
 		return response;
+	}
+	
+	public static String parse(String response) {
+		JSONParser parser = new JSONParser();
+		JSONObject obj = new JSONObject();
+		try {
+			obj = (JSONObject) parser.parse(response);
+		} catch (ParseException e) {
+		}
+		JSONArray sentences = (JSONArray) obj.get("sentences");
+		String finalresponse = "";
+		for(int i = 0; i < sentences.size(); i++ ){
+			finalresponse = finalresponse + sentences.get(i);
+		}
+		return finalresponse;
 	}
 }
