@@ -62,7 +62,7 @@ public class TransUtil {
 		// end replace with UUID
 		text = URLEncoder.encode(text);
 		String response = readURL("http://translate.google.com/translate_a/t?q=" + text + "&client=p&text=&sl=auto&tl=" + lang + "&ie=UTF-8&oe=UTF-8");
-		response = parse(response, lang);
+		response = parse(response);
 
 		// begin UUID to URL		
 		Set set = hm.entrySet(); 
@@ -72,6 +72,7 @@ public class TransUtil {
 			response.replace(me.getKey().toString(), me.getValue().toString()); 
 		} 
 		// end UUID to URL
+		response = postProcess(response, lang);
 		return response;
 	}
 
@@ -93,7 +94,7 @@ public class TransUtil {
 		return response;
 	}
 	
-	public static String parse(String response, String lang) {
+	public static String parse(String response) {
 		JSONParser parser = new JSONParser();
 		JSONObject obj = new JSONObject();
 		try {
@@ -105,7 +106,6 @@ public class TransUtil {
 		for(int i = 0; i < sentences.size(); i++ ){
 			String line = "" + sentences.get(i);
 			String trans = getTrans(line);
-		    trans = postProcess(trans, lang);
 			finalresponse = finalresponse + trans;
 		}
 		return finalresponse;
