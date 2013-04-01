@@ -103,9 +103,26 @@ public class TransUtil {
 		}
 		JSONArray sentences = (JSONArray) obj.get("sentences");
 		String finalresponse = "";
+		String line = "";
 		for(int i = 0; i < sentences.size(); i++ ){
-			finalresponse = finalresponse + sentences.get(i);
+			line = line + sentences.get(i);
+			String trans = getTrans(line);
+			finalresponse = finalresponse + trans + " ";
+			line = "";
 		}
 		return finalresponse;
+	}
+	
+	public static String getTrans (String sentence)
+	{
+		JSONParser parser = new JSONParser();
+		JSONObject obj = new JSONObject();
+		try {
+			obj = (JSONObject) parser.parse(sentence);
+		} catch (ParseException e) {
+		}
+		sentence = (String) obj.get("trans");
+
+		return sentence;
 	}
 }
